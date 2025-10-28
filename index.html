@@ -1,1 +1,1871 @@
-its just test bot is coming soon
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn SHIB - Watch Ads, Complete Tasks</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
+    <!-- AdMonetag SDK -->
+    <script src='//libtl.com/sdk.js' data-zone='10105775' data-sdk='show_10105775'></script>
+    
+    <!-- Giga Ads SDK -->
+    <script src="https://ad.gigapub.tech/script?id=3976"></script>
+    
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --secondary: #06D6A0;
+            --background: #0F0F23;
+            --surface: #1A1A2E;
+            --surface-light: #2D2B55;
+            --text: #FFFFFF;
+            --text-secondary: #A5B4CB;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --border-radius: 16px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px 80px;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: var(--surface);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: "🐕";
+            font-size: 1.75rem;
+        }
+
+        .profile-btn {
+            background: var(--surface-light);
+            border: none;
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .balance-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .balance-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--surface-light);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+        }
+
+        .action-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Tasks Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 32px 0 16px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .see-all {
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .task-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid var(--surface-light);
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .task-reward {
+            background: var(--secondary);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .task-type {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .claim-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .claim-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .claim-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--surface-light);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Advanced Spin Wheel Styles */
+        .wheel-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 20px auto;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            transition: transform 4s cubic-bezier(0.2, 0.8, 0.3, 1);
+            overflow: hidden;
+            border: 8px solid var(--primary);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 10;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, var(--secondary), #04B077);
+            color: #000;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin: 25px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(6, 214, 160, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 25px rgba(6, 214, 160, 0.4);
+        }
+
+        .spin-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Progress bars */
+        .progress-bar {
+            background: var(--surface-light);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            background: var(--secondary);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Withdraw Section */
+        .withdraw-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--surface-light);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .requirement.fulfilled {
+            color: var(--secondary);
+        }
+
+        .requirement.pending {
+            color: var(--text-secondary);
+        }
+
+        /* History Table */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .history-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-completed {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .status-pending {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .status-rejected {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* Timer Styles */
+        .timer {
+            background: var(--surface-light);
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--warning);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--warning);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Profile Picture */
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            background: var(--surface-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px 80px;
+            }
+            
+            .balance-amount {
+                font-size: 2rem;
+            }
+            
+            .task-card {
+                padding: 16px;
+            }
+
+            .wheel-container {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        /* Ad Loading Overlay */
+        .ad-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        .ad-loading-content {
+            text-align: center;
+            padding: 30px;
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            border: 2px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ad Loading Overlay -->
+    <div id="adLoading" class="ad-loading">
+        <div class="ad-loading-content">
+            <div style="font-size: 3rem; margin-bottom: 16px;">📺</div>
+            <h3 style="margin-bottom: 8px;">Loading Ads...</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Please wait while we load the advertisement</p>
+            <div class="loading"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">ShibEarn</div>
+            <button class="profile-btn" onclick="openModal('profileModal')">👤</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Balance Card -->
+        <div class="balance-card fade-in">
+            <div class="balance-label">Your SHIB Balance</div>
+            <div class="balance-amount" id="balanceAmount">0 SHIB</div>
+            <div class="balance-subtitle">Minimum withdrawal: <span id="minWithdrawAmount">3,000</span> SHIB</div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="openModal('withdrawModal')">
+                <span class="action-icon">💸</span>
+                <span class="action-label">Withdraw</span>
+            </button>
+            <button class="action-btn" onclick="openModal('referralModal')">
+                <span class="action-icon">👥</span>
+                <span class="action-label">Invite Friends</span>
+            </button>
+        </div>
+
+        <!-- Withdraw Requirements -->
+        <div class="withdraw-card fade-in">
+            <h3 style="margin-bottom: 16px;">Withdraw Requirements</h3>
+            <div class="requirement" id="balanceReq">
+                <span id="balanceStatus">❌</span>
+                <span>Minimum <span id="minWithdrawReq">3,000</span> SHIB balance</span>
+            </div>
+            <div class="requirement" id="adsReq">
+                <span id="adsStatus">❌</span>
+                <span>Watch at least <span id="minAdsReq">30</span> ads (Current: <span id="adsWatched">0</span>/<span id="minAdsCount">30</span>)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="adsProgress" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Available Tasks -->
+        <div class="section-header">
+            <h2 class="section-title">Available Tasks</h2>
+            <a href="#" class="see-all">See All</a>
+        </div>
+
+        <div class="task-grid">
+            <!-- Task 1 - Watch Ad -->
+            <div class="task-card fade-in">
+                <div class="task-header">
+                    <div class="task-title">Watch Rewarded Ad</div>
+                    <div class="task-reward">+<span id="adRewardAmount">20</span> SHIB</div>
+                </div>
+                <div class="task-description">
+                    Watch a short video ad and earn <span id="adRewardDesc">20</span> SHIB instantly
+                    <div id="adsLimitInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
+                </div>
+                <div class="task-meta">
+                    <div class="task-type">📺 Video Ad</div>
+                    <div>30 seconds</div>
+                </div>
+                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="watchAd()" id="watchAdBtn">
+                    Watch Ad (+<span id="adRewardBtn">20</span> SHIB)
+                </button>
+            </div>
+
+            <!-- Task 2 - Spin & Win -->
+            <div class="task-card fade-in">
+                <div class="task-header">
+                    <div class="task-title">Spin & Win Daily</div>
+                    <div class="task-reward">Up to 100 SHIB</div>
+                </div>
+                <div class="task-description">
+                    Spin the wheel daily and win 10-100 SHIB! 
+                    <div id="spinTimerInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
+                </div>
+                <div class="task-meta">
+                    <div class="task-type">🎯 Daily Spin</div>
+                    <div id="spinsRemaining">Spins left: 2/2</div>
+                </div>
+                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="openModal('spinModal')" id="spinTaskBtn">
+                    Spin & Win
+                </button>
+            </div>
+
+            <!-- Task 3 - Join Telegram -->
+            <div class="task-card fade-in">
+                <div class="task-header">
+                    <div class="task-title">Join Telegram Channel</div>
+                    <div class="task-reward">+<span id="telegramReward">100</span> SHIB</div>
+                </div>
+                <div class="task-description">
+                    Join our official Telegram channel for updates and earn <span id="telegramRewardDesc">100</span> SHIB
+                </div>
+                <div class="task-meta">
+                    <div class="task-type">📱 Social</div>
+                    <div>One-time</div>
+                </div>
+                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="joinTelegram()" id="joinTelegramBtn">
+                    Join Channel
+                </button>
+            </div>
+        </div>
+
+        <!-- Withdraw History -->
+        <div class="section-header">
+            <h2 class="section-title">Withdraw History</h2>
+            <a href="#" class="see-all" onclick="loadMoreHistory()">See All</a>
+        </div>
+
+        <div class="withdraw-card">
+            <div id="withdrawHistory">
+                <div style="text-align: center; color: var(--text-secondary); padding: 20px;">
+                    No withdrawal history yet
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" onclick="openModal('withdrawModal')">
+            <span class="nav-icon">💸</span>
+            <span>Withdraw</span>
+        </a>
+        <a href="#" class="nav-item" onclick="openModal('referralModal')">
+            <span class="nav-icon">👥</span>
+            <span>Referrals</span>
+        </a>
+        <a href="#" class="nav-item" onclick="openModal('profileModal')">
+            <span class="nav-icon">📊</span>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Withdraw SHIB</h3>
+                <button class="close-btn" onclick="closeModal('withdrawModal')">&times;</button>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <div style="color: var(--text-secondary); margin-bottom: 8px;">Available Balance</div>
+                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;" id="withdrawBalance">0 SHIB</div>
+                
+                <div id="withdrawRequirements">
+                    <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                        <div style="color: var(--warning); font-size: 0.9rem; margin-bottom: 8px;">⚠️ Withdraw Requirements</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem;">
+                            • Minimum <span id="withdrawMinAmount">3,000</span> SHIB balance<br>
+                            • Watch at least <span id="withdrawMinAds">30</span> ads<br>
+                            <br>
+                            <strong>Current Status:</strong><br>
+                            <span id="withdrawBalanceStatus">❌ Balance: 0/3,000 SHIB</span><br>
+                            <span id="withdrawAdsStatus">❌ Ads Watched: 0/30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="withdrawForm" style="display: none;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Wallet Address</label>
+                    <input type="text" id="walletAddress" placeholder="Enter your SHIB wallet address" 
+                           style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--surface-light); 
+                                  background: var(--background); color: var(--text); margin-bottom: 20px;">
+                    
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Amount to Withdraw</label>
+                    <input type="number" id="withdrawAmount" min="3000" value="3000" 
+                           style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--surface-light); 
+                                  background: var(--background); color: var(--text); margin-bottom: 20px;">
+                </div>
+            </div>
+            <button class="claim-btn" id="withdrawBtn" style="width: 100%;" onclick="requestWithdrawal()" disabled>
+                Requirements Not Met
+            </button>
+        </div>
+    </div>
+
+    <!-- Spin Modal -->
+    <div id="spinModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Spin & Win SHIB! 🎯</h3>
+                <button class="close-btn" onclick="closeModal('spinModal')">&times;</button>
+            </div>
+            <div style="text-align: center;">
+                <div class="wheel-container">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel" id="wheel">
+                        <!-- Wheel segments will be generated by JavaScript -->
+                    </div>
+                </div>
+                <div style="margin: 20px 0;">
+                    <div style="font-size: 1.1rem; margin-bottom: 8px;">Spins Remaining: <span id="modalSpinsRemaining">0</span>/<span id="dailySpinLimit">2</span></div>
+                    <div id="spinTimer" class="timer" style="display: none; margin: 10px auto;"></div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Win 10-100 SHIB per spin!</div>
+                </div>
+                <button class="spin-btn" id="spinButton" onclick="spinWheel()">SPIN NOW! 🎯</button>
+                <div id="spinResult" style="margin-top: 20px; font-size: 1.2rem; font-weight: 700;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral Modal -->
+    <div id="referralModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Invite & Earn</h3>
+                <button class="close-btn" onclick="closeModal('referralModal')">&times;</button>
+            </div>
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="font-size: 3rem; margin-bottom: 16px;">👥</div>
+                <div style="font-size: 1.1rem; margin-bottom: 8px;">Invite friends and earn <span id="referralRewardAmount">200</span> SHIB each</div>
+                <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                    Your friends will join our community
+                </div>
+            </div>
+            
+            <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Your Referral Link</div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="referralLink" readonly 
+                           style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--surface-light); 
+                           background: var(--background); color: var(--text); font-size: 0.9rem;">
+                    <button onclick="copyReferralLink()" 
+                            style="background: var(--primary); border: none; color: white; padding: 12px 16px; border-radius: 8px; cursor: pointer;">
+                        Copy
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center; margin-bottom: 20px;">
+                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralsCount">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Friends Joined</div>
+                </div>
+                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralEarnings">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">SHIB Earned</div>
+                </div>
+            </div>
+
+            <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Recent Referrals</div>
+                <div id="recentReferrals" style="max-height: 150px; overflow-y: auto;">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 10px;">
+                        No referrals yet
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Profile</h3>
+                <button class="close-btn" onclick="closeModal('profileModal')">&times;</button>
+            </div>
+            <div style="text-align: center; margin-bottom: 24px;">
+                <img id="profilePicture" class="profile-pic" src="" alt="Profile" onerror="this.style.display='none'">
+                <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; 
+                          display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px; display: none;" id="defaultProfilePic">
+                    👤
+                </div>
+                <div style="font-size: 1.2rem; font-weight: 600;" id="profileName">Loading...</div>
+                <div style="color: var(--text-secondary);" id="profileUsername">@username</div>
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">ID: <span id="profileUserId">-</span></div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span>Member Since</span>
+                    <span id="memberSince">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span>Tasks Completed</span>
+                    <span id="profileTasksCompleted">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span>Ads Watched</span>
+                    <span id="profileAdsWatched">0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span>Total Earned</span>
+                    <span style="color: var(--secondary);" id="profileTotalEarned">0 SHIB</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span>Referral Earnings</span>
+                    <span style="color: var(--secondary);" id="profileReferralEarnings">0 SHIB</span>
+                </div>
+            </div>
+            
+            <button class="claim-btn" style="width: 100%; background: var(--danger);" onclick="logout()">
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration - REPLACE WITH YOUR CONFIG
+        const firebaseConfig = {
+  apiKey: "AIzaSyBa1OxCbgE_hgfhLb2yeya37n8BEIqihn8",
+  authDomain: "quckikbwt.firebaseapp.com",
+  projectId: "quckikbwt",
+  storageBucket: "quckikbwt.firebasestorage.app",
+  messagingSenderId: "526009462983",
+  appId: "1:526009462983:web:392c1cb89d899eaf9e0ee2"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // App Configuration
+        let appConfig = {
+            minWithdraw: 3000,
+            minAdsToWithdraw: 30,
+            dailyAdsLimit: 30,
+            dailySpinLimit: 2,
+            adReward: 20,
+            telegramReward: 100,
+            referralReward: 200,
+            telegramChannel: "https://t.me/your_channel_here"
+        };
+
+        // User Data
+        let userData = {
+            uid: null,
+            balance: 0,
+            adsWatched: 0,
+            adsWatchedToday: 0,
+            spinsRemaining: 2,
+            tasksCompleted: 0,
+            totalEarned: 0,
+            telegramJoined: false,
+            referralCode: null,
+            referrals: [],
+            referralEarnings: 0,
+            withdrawHistory: [],
+            lastSpinReset: null,
+            lastAdReset: null,
+            lastAdWatch: null,
+            isBlacklisted: false,
+            telegramData: {}
+        };
+
+        // Spin rewards (in SHIB)
+        const spinRewards = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        let isSpinning = false;
+        let timers = {};
+        let isWatchingAd = false;
+
+        // Initialize the application
+        async function initApp() {
+            try {
+                // Load app configuration first
+                await loadAppConfig();
+
+                // Initialize Telegram Web App if available
+                await initTelegramWebApp();
+
+                // Check authentication state
+                auth.onAuthStateChanged(async (user) => {
+                    if (user) {
+                        await loadUserData(user.uid);
+                        await checkDailyReset();
+                        initPage();
+                        generateWheel();
+                        startTimers();
+                    } else {
+                        await anonymousLogin();
+                    }
+                });
+            } catch (error) {
+                console.error('Initialization error:', error);
+                initDemoMode();
+            }
+        }
+
+        // Load app configuration from Firestore
+        async function loadAppConfig() {
+            try {
+                const configDoc = await db.collection('appConfig').doc('settings').get();
+                if (configDoc.exists) {
+                    const config = configDoc.data();
+                    Object.assign(appConfig, config);
+                }
+                updateConfigUI();
+            } catch (error) {
+                console.error('Error loading app config:', error);
+            }
+        }
+
+        // Update UI with configuration
+        function updateConfigUI() {
+            document.getElementById('minWithdrawAmount').textContent = appConfig.minWithdraw.toLocaleString();
+            document.getElementById('minWithdrawReq').textContent = appConfig.minWithdraw.toLocaleString();
+            document.getElementById('minAdsReq').textContent = appConfig.minAdsToWithdraw;
+            document.getElementById('minAdsCount').textContent = appConfig.minAdsToWithdraw;
+            document.getElementById('adRewardAmount').textContent = appConfig.adReward;
+            document.getElementById('adRewardDesc').textContent = appConfig.adReward;
+            document.getElementById('adRewardBtn').textContent = appConfig.adReward;
+            document.getElementById('telegramReward').textContent = appConfig.telegramReward;
+            document.getElementById('telegramRewardDesc').textContent = appConfig.telegramReward;
+            document.getElementById('referralRewardAmount').textContent = appConfig.referralReward;
+            document.getElementById('withdrawMinAmount').textContent = appConfig.minWithdraw.toLocaleString();
+            document.getElementById('withdrawMinAds').textContent = appConfig.minAdsToWithdraw;
+            document.getElementById('dailySpinLimit').textContent = appConfig.dailySpinLimit;
+        }
+
+        // Initialize Telegram Web App
+        async function initTelegramWebApp() {
+            // Check if we're in Telegram Web App
+            if (window.Telegram && Telegram.WebApp) {
+                const tg = Telegram.WebApp;
+                tg.ready();
+                tg.expand();
+                
+                // Get Telegram user data
+                const user = tg.initDataUnsafe?.user;
+                if (user) {
+                    userData.telegramData = {
+                        id: user.id,
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        username: user.username,
+                        photoUrl: user.photo_url,
+                        languageCode: user.language_code
+                    };
+
+                    // Update profile modal with real Telegram data
+                    updateTelegramProfile();
+                }
+            }
+        }
+
+        // Update Telegram profile data
+        function updateTelegramProfile() {
+            if (userData.telegramData.id) {
+                document.getElementById('profileName').textContent = 
+                    `${userData.telegramData.firstName || ''} ${userData.telegramData.lastName || ''}`.trim() || 'Telegram User';
+                document.getElementById('profileUsername').textContent = 
+                    userData.telegramData.username ? `@${userData.telegramData.username}` : 'No username';
+                document.getElementById('profileUserId').textContent = userData.telegramData.id;
+
+                if (userData.telegramData.photoUrl) {
+                    document.getElementById('profilePicture').src = userData.telegramData.photoUrl;
+                    document.getElementById('profilePicture').style.display = 'block';
+                    document.getElementById('defaultProfilePic').style.display = 'none';
+                } else {
+                    document.getElementById('profilePicture').style.display = 'none';
+                    document.getElementById('defaultProfilePic').style.display = 'flex';
+                }
+            }
+        }
+
+        // Anonymous login for demo
+        async function anonymousLogin() {
+            try {
+                const result = await auth.signInAnonymously();
+                const user = result.user;
+                await initializeUserData(user.uid);
+                await loadUserData(user.uid);
+                initPage();
+                generateWheel();
+                startTimers();
+            } catch (error) {
+                console.error('Login error:', error);
+                initDemoMode();
+            }
+        }
+
+        // Initialize user data in Firestore
+        async function initializeUserData(uid) {
+            const userRef = db.collection('users').doc(uid);
+            const userDoc = await userRef.get();
+            
+            if (!userDoc.exists) {
+                userData.uid = uid;
+                userData.referralCode = generateReferralCode();
+                userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                userData.lastSpinReset = firebase.firestore.Timestamp.now();
+                userData.lastAdReset = firebase.firestore.Timestamp.now();
+                
+                await userRef.set(userData);
+            }
+        }
+
+        // Load user data from Firestore
+        async function loadUserData(uid) {
+            try {
+                const userDoc = await db.collection('users').doc(uid).get();
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    Object.assign(userData, data);
+                    userData.uid = uid;
+
+                    // Check if user is blacklisted
+                    if (userData.isBlacklisted) {
+                        alert('Your account has been suspended. Please contact support.');
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // Save user data to Firestore
+        async function saveUserData() {
+            if (!userData.uid) return;
+            
+            try {
+                await db.collection('users').doc(userData.uid).update({
+                    balance: userData.balance,
+                    adsWatched: userData.adsWatched,
+                    adsWatchedToday: userData.adsWatchedToday,
+                    spinsRemaining: userData.spinsRemaining,
+                    tasksCompleted: userData.tasksCompleted,
+                    totalEarned: userData.totalEarned,
+                    telegramJoined: userData.telegramJoined,
+                    referrals: userData.referrals,
+                    referralEarnings: userData.referralEarnings,
+                    withdrawHistory: userData.withdrawHistory,
+                    lastSpinReset: userData.lastSpinReset,
+                    lastAdReset: userData.lastAdReset,
+                    lastAdWatch: userData.lastAdWatch,
+                    telegramData: userData.telegramData,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (error) {
+                console.error('Error saving user data:', error);
+            }
+        }
+
+        // Check and reset daily limits
+        async function checkDailyReset() {
+            const now = new Date();
+            const lastSpinReset = userData.lastSpinReset ? new Date(userData.lastSpinReset.toDate()) : null;
+            const lastAdReset = userData.lastAdReset ? new Date(userData.lastAdReset.toDate()) : null;
+            
+            // Check if 24 hours have passed since last reset
+            const shouldResetSpins = !lastSpinReset || (now - lastSpinReset) >= 24 * 60 * 60 * 1000;
+            const shouldResetAds = !lastAdReset || (now - lastAdReset) >= 24 * 60 * 60 * 1000;
+            
+            if (shouldResetSpins) {
+                userData.spinsRemaining = appConfig.dailySpinLimit;
+                userData.lastSpinReset = firebase.firestore.Timestamp.now();
+            }
+            
+            if (shouldResetAds) {
+                userData.adsWatchedToday = 0;
+                userData.lastAdReset = firebase.firestore.Timestamp.now();
+            }
+            
+            await saveUserData();
+        }
+
+        // Generate referral code
+        function generateReferralCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Initialize the page
+        function initPage() {
+            updateBalance();
+            updateWithdrawRequirements();
+            updateProfileStats();
+            updateReferralInfo();
+            loadWithdrawHistory();
+            updateReferralLink();
+            updateTaskButtons();
+        }
+
+        // Start timers for spin and ad resets
+        function startTimers() {
+            updateSpinTimer();
+            updateAdsLimitInfo();
+            
+            // Update timers every second
+            timers.spinTimer = setInterval(updateSpinTimer, 1000);
+            timers.adsTimer = setInterval(updateAdsLimitInfo, 1000);
+        }
+
+        // Update spin timer display
+        function updateSpinTimer() {
+            const spinTimerElement = document.getElementById('spinTimer');
+            const spinButton = document.getElementById('spinButton');
+            const spinTaskBtn = document.getElementById('spinTaskBtn');
+            
+            if (userData.spinsRemaining === 0) {
+                const nextReset = getNextSpinResetTime();
+                const now = new Date();
+                const timeLeft = nextReset - now;
+                
+                if (timeLeft > 0) {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    spinTimerElement.textContent = `Next spin in: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    spinTimerElement.style.display = 'block';
+                    document.getElementById('spinTimerInfo').textContent = `Next spins in: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    spinButton.disabled = true;
+                    spinButton.textContent = 'WAIT FOR NEXT SPIN';
+                    spinTaskBtn.disabled = true;
+                } else {
+                    // Reset spins if time is up
+                    userData.spinsRemaining = appConfig.dailySpinLimit;
+                    userData.lastSpinReset = firebase.firestore.Timestamp.now();
+                    saveUserData();
+                    updateProfileStats();
+                    updateTaskButtons();
+                }
+            } else {
+                spinTimerElement.style.display = 'none';
+                document.getElementById('spinTimerInfo').textContent = '';
+                spinButton.disabled = false;
+                spinTaskBtn.disabled = false;
+            }
+        }
+
+        function getNextSpinResetTime() {
+            const lastReset = userData.lastSpinReset ? new Date(userData.lastSpinReset.toDate()) : new Date();
+            const nextReset = new Date(lastReset);
+            nextReset.setHours(nextReset.getHours() + 24); // Exactly 24 hours from last reset
+            return nextReset;
+        }
+
+        // Update ads limit info
+        function updateAdsLimitInfo() {
+            const adsLimitInfo = document.getElementById('adsLimitInfo');
+            const watchAdBtn = document.getElementById('watchAdBtn');
+            
+            if (userData.adsWatchedToday >= appConfig.dailyAdsLimit) {
+                const nextReset = getNextAdResetTime();
+                const now = new Date();
+                const timeLeft = nextReset - now;
+                
+                if (timeLeft > 0) {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    adsLimitInfo.textContent = `Daily limit reached. Resets in: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    adsLimitInfo.style.color = 'var(--warning)';
+                    watchAdBtn.disabled = true;
+                    watchAdBtn.textContent = 'DAILY LIMIT REACHED';
+                } else {
+                    // Reset ads if time is up
+                    userData.adsWatchedToday = 0;
+                    userData.lastAdReset = firebase.firestore.Timestamp.now();
+                    saveUserData();
+                    updateTaskButtons();
+                }
+            } else {
+                adsLimitInfo.textContent = `Today: ${userData.adsWatchedToday}/${appConfig.dailyAdsLimit} ads watched`;
+                adsLimitInfo.style.color = 'var(--text-secondary)';
+                watchAdBtn.disabled = false;
+                watchAdBtn.textContent = `Watch Ad (+${appConfig.adReward} SHIB)`;
+            }
+        }
+
+        function getNextAdResetTime() {
+            const lastReset = userData.lastAdReset ? new Date(userData.lastAdReset.toDate()) : new Date();
+            const nextReset = new Date(lastReset);
+            nextReset.setHours(nextReset.getHours() + 24); // Exactly 24 hours from last reset
+            return nextReset;
+        }
+
+        // Update task buttons based on availability
+        function updateTaskButtons() {
+            // Update Telegram join button
+            if (userData.telegramJoined) {
+                document.getElementById('joinTelegramBtn').textContent = 'Already Joined';
+                document.getElementById('joinTelegramBtn').disabled = true;
+            }
+
+            // Update spin button
+            document.getElementById('modalSpinsRemaining').textContent = userData.spinsRemaining;
+            document.getElementById('spinsRemaining').textContent = `Spins left: ${userData.spinsRemaining}/${appConfig.dailySpinLimit}`;
+        }
+
+        // Demo mode fallback
+        function initDemoMode() {
+            userData.referralCode = 'DEMO123';
+            initPage();
+            generateWheel();
+            startTimers();
+            console.log('Running in demo mode - no Firebase connection');
+        }
+
+        // Update balance display
+        function updateBalance() {
+            document.getElementById('balanceAmount').textContent = userData.balance.toLocaleString() + ' SHIB';
+            document.getElementById('withdrawBalance').textContent = userData.balance.toLocaleString() + ' SHIB';
+        }
+
+        // Update withdraw requirements
+        function updateWithdrawRequirements() {
+            const balanceReq = document.getElementById('balanceReq');
+            const adsReq = document.getElementById('adsReq');
+            const balanceStatus = document.getElementById('balanceStatus');
+            const adsStatus = document.getElementById('adsStatus');
+            const adsWatched = document.getElementById('adsWatched');
+            const adsProgress = document.getElementById('adsProgress');
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            const withdrawForm = document.getElementById('withdrawForm');
+            const withdrawRequirements = document.getElementById('withdrawRequirements');
+            const withdrawBalanceStatus = document.getElementById('withdrawBalanceStatus');
+            const withdrawAdsStatus = document.getElementById('withdrawAdsStatus');
+
+            // Update ads watched
+            adsWatched.textContent = userData.adsWatched;
+            const progressPercent = (userData.adsWatched / appConfig.minAdsToWithdraw) * 100;
+            adsProgress.style.width = Math.min(progressPercent, 100) + '%';
+
+            // Check requirements
+            const hasMinBalance = userData.balance >= appConfig.minWithdraw;
+            const hasMinAds = userData.adsWatched >= appConfig.minAdsToWithdraw;
+
+            // Update status icons and text
+            balanceStatus.textContent = hasMinBalance ? '✅' : '❌';
+            adsStatus.textContent = hasMinAds ? '✅' : '❌';
+            
+            withdrawBalanceStatus.textContent = `${hasMinBalance ? '✅' : '❌'} Balance: ${userData.balance.toLocaleString()}/${appConfig.minWithdraw.toLocaleString()} SHIB`;
+            withdrawAdsStatus.textContent = `${hasMinAds ? '✅' : '❌'} Ads Watched: ${userData.adsWatched}/${appConfig.minAdsToWithdraw}`;
+
+            // Update requirement classes
+            balanceReq.className = hasMinBalance ? 'requirement fulfilled' : 'requirement pending';
+            adsReq.className = hasMinAds ? 'requirement fulfilled' : 'requirement pending';
+
+            // Update withdraw button
+            const canWithdraw = hasMinBalance && hasMinAds;
+            if (canWithdraw) {
+                withdrawBtn.textContent = 'Request Withdrawal';
+                withdrawBtn.disabled = false;
+                withdrawForm.style.display = 'block';
+                withdrawRequirements.style.display = 'none';
+                
+                // Set max withdraw amount to user's balance
+                document.getElementById('withdrawAmount').max = userData.balance;
+                document.getElementById('withdrawAmount').value = Math.min(userData.balance, appConfig.minWithdraw);
+            } else {
+                withdrawBtn.textContent = 'Requirements Not Met';
+                withdrawBtn.disabled = true;
+                withdrawForm.style.display = 'none';
+                withdrawRequirements.style.display = 'block';
+            }
+        }
+
+        // Update profile statistics
+        function updateProfileStats() {
+            document.getElementById('profileAdsWatched').textContent = userData.adsWatched;
+            document.getElementById('spinsRemaining').textContent = `Spins left: ${userData.spinsRemaining}/${appConfig.dailySpinLimit}`;
+            document.getElementById('modalSpinsRemaining').textContent = userData.spinsRemaining;
+            document.getElementById('profileTasksCompleted').textContent = userData.tasksCompleted;
+            document.getElementById('profileTotalEarned').textContent = userData.totalEarned.toLocaleString() + ' SHIB';
+            document.getElementById('profileReferralEarnings').textContent = userData.referralEarnings.toLocaleString() + ' SHIB';
+            
+            // Set member since date
+            if (userData.createdAt) {
+                const date = userData.createdAt.toDate ? userData.createdAt.toDate() : new Date();
+                document.getElementById('memberSince').textContent = date.toLocaleDateString();
+            }
+        }
+
+        // Update referral information
+        function updateReferralInfo() {
+            document.getElementById('referralsCount').textContent = userData.referrals.length;
+            document.getElementById('referralEarnings').textContent = userData.referralEarnings.toLocaleString();
+            
+            // Update recent referrals
+            const recentRefs = document.getElementById('recentReferrals');
+            if (userData.referrals.length === 0) {
+                recentRefs.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 10px;">No referrals yet</div>';
+            } else {
+                recentRefs.innerHTML = userData.referrals.slice(0, 5).map(ref => 
+                    `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--surface-light);">
+                        <span>${ref.username || 'User'}</span>
+                        <span style="color: var(--secondary);">+${appConfig.referralReward} SHIB</span>
+                    </div>`
+                ).join('');
+            }
+        }
+
+        // Update referral link
+        function updateReferralLink() {
+            const referralLink = `https://t.me/ShibEarnBot?start=ref_${userData.referralCode}`;
+            document.getElementById('referralLink').value = referralLink;
+        }
+
+        // Load withdraw history
+        function loadWithdrawHistory() {
+            const historyContainer = document.getElementById('withdrawHistory');
+            
+            if (userData.withdrawHistory.length === 0) {
+                historyContainer.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No withdrawal history yet</div>';
+                return;
+            }
+
+            const historyHTML = `
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${userData.withdrawHistory.slice(0, 5).map(withdrawal => `
+                            <tr>
+                                <td>${new Date(withdrawal.date).toLocaleDateString()}</td>
+                                <td>${withdrawal.amount.toLocaleString()} SHIB</td>
+                                <td class="status-${withdrawal.status}">${withdrawal.status.charAt(0).toUpperCase() + withdrawal.status.slice(1)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            historyContainer.innerHTML = historyHTML;
+        }
+
+        // Generate advanced spin wheel with proper numbers and styling
+        function generateWheel() {
+            const wheel = document.getElementById('wheel');
+            wheel.innerHTML = '';
+            
+            const segments = 10;
+            const colors = [
+                '#8B5CF6', '#7C3AED', '#6D28D9', '#5B21B6',
+                '#06D6A0', '#05C38A', '#04B077', '#F59E0B',
+                '#E58A07', '#D97706'
+            ];
+            
+            for (let i = 0; i < segments; i++) {
+                const segment = document.createElement('div');
+                segment.className = 'wheel-segment';
+                segment.style.transform = `rotate(${i * 36}deg)`;
+                segment.style.background = `linear-gradient(135deg, ${colors[i]}, ${darkenColor(colors[i], 20)})`;
+                segment.style.borderLeft = '2px solid rgba(255,255,255,0.3)';
+                segment.innerHTML = `
+                    <div style="transform: rotate(18deg); text-align: center; width: 100%;">
+                        <div style="font-size: 16px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">${spinRewards[i]}</div>
+                        <div style="font-size: 11px; font-weight: 600; opacity: 0.9;">SHIB</div>
+                    </div>
+                `;
+                wheel.appendChild(segment);
+            }
+        }
+
+        function darkenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+
+        // Watch ad function with both Monetag and Giga ads
+        async function watchAd() {
+            if (isWatchingAd) {
+                alert('Please wait, ad is already loading...');
+                return;
+            }
+
+            if (userData.adsWatchedToday >= appConfig.dailyAdsLimit) {
+                alert('Daily ad limit reached. Please try again tomorrow.');
+                return;
+            }
+
+            isWatchingAd = true;
+            const btn = document.getElementById('watchAdBtn');
+            const originalText = btn.textContent;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Loading...';
+
+            // Show loading overlay
+            document.getElementById('adLoading').style.display = 'flex';
+
+            try {
+                let monetagCompleted = false;
+                let gigaCompleted = false;
+
+                // Function to check if both ads are completed
+                const checkAdCompletion = () => {
+                    if (monetagCompleted && gigaCompleted) {
+                        completeAdWatch();
+                    }
+                };
+
+                // Show Monetag ad first
+                if (typeof show_10105775 === 'function') {
+                    show_10105775({ 
+                        type: 'inApp', 
+                        inAppSettings: { 
+                            frequency: 2, 
+                            capping: 0.1, 
+                            interval: 30, 
+                            timeout: 5, 
+                            everyPage: false 
+                        } 
+                    });
+
+                    // Wait a bit then show rewarded ad
+                    setTimeout(() => {
+                        if (typeof show_10105775 === 'function') {
+                            show_10105775().then(() => {
+                                monetagCompleted = true;
+                                checkAdCompletion();
+                            }).catch((error) => {
+                                console.error('Monetag ad error:', error);
+                                monetagCompleted = true; // Mark as completed even if error to continue
+                                checkAdCompletion();
+                            });
+                        } else {
+                            monetagCompleted = true;
+                            checkAdCompletion();
+                        }
+                    }, 2000);
+                } else {
+                    monetagCompleted = true;
+                }
+
+                // Show Giga ad
+                if (typeof window.showGiga === 'function') {
+                    window.showGiga()
+                        .then(() => {
+                            gigaCompleted = true;
+                            checkAdCompletion();
+                        })
+                        .catch((error) => {
+                            console.error('Giga ad error:', error);
+                            gigaCompleted = true; // Mark as completed even if error to continue
+                            checkAdCompletion();
+                        });
+                } else {
+                    gigaCompleted = true;
+                }
+
+                // Fallback in case ads don't load
+                setTimeout(() => {
+                    if (!monetagCompleted || !gigaCompleted) {
+                        console.log('Ad timeout, completing anyway');
+                        monetagCompleted = true;
+                        gigaCompleted = true;
+                        checkAdCompletion();
+                    }
+                }, 30000); // 30 second timeout
+
+            } catch (error) {
+                console.error('Ad loading error:', error);
+                // Fallback to direct reward
+                completeAdWatch();
+            }
+        }
+
+        function completeAdWatch() {
+            // Hide loading overlay
+            document.getElementById('adLoading').style.display = 'none';
+
+            userData.balance += appConfig.adReward;
+            userData.adsWatched += 1;
+            userData.adsWatchedToday += 1;
+            userData.tasksCompleted += 1;
+            userData.totalEarned += appConfig.adReward;
+            userData.lastAdWatch = firebase.firestore.Timestamp.now();
+            
+            saveUserData();
+            
+            updateBalance();
+            updateWithdrawRequirements();
+            updateProfileStats();
+            updateAdsLimitInfo();
+            
+            showConfetti();
+            alert(`🎉 Ad completed! +${appConfig.adReward} SHIB added to your balance.`);
+            
+            const btn = document.getElementById('watchAdBtn');
+            btn.disabled = false;
+            btn.textContent = `Watch Ad (+${appConfig.adReward} SHIB)`;
+            
+            isWatchingAd = false;
+        }
+
+        // Spin wheel function
+        async function spinWheel() {
+            if (isSpinning || userData.spinsRemaining <= 0) return;
+            
+            isSpinning = true;
+            userData.spinsRemaining -= 1;
+            const spinButton = document.getElementById('spinButton');
+            const wheel = document.getElementById('wheel');
+            const resultDiv = document.getElementById('spinResult');
+            
+            spinButton.disabled = true;
+            spinButton.textContent = 'Spinning...';
+            resultDiv.textContent = '';
+            
+            // Random spin result
+            const rewardIndex = Math.floor(Math.random() * spinRewards.length);
+            const reward = spinRewards[rewardIndex];
+            
+            // Calculate spin degrees (multiple full rotations plus offset to land on selected segment)
+            const fullRotations = 5;
+            const segmentAngle = 36;
+            const targetAngle = (rewardIndex * segmentAngle) + (fullRotations * 360);
+            const randomOffset = (Math.random() * 10) - 5; // Small random offset for realism
+            const spinDegrees = targetAngle + randomOffset;
+            
+            // Apply spin animation
+            wheel.style.transform = `rotate(${spinDegrees}deg)`;
+            
+            setTimeout(async () => {
+                userData.balance += reward;
+                userData.tasksCompleted += 1;
+                userData.totalEarned += reward;
+                
+                await saveUserData();
+                
+                updateBalance();
+                updateProfileStats();
+                updateSpinTimer();
+                
+                resultDiv.textContent = `🎉 You won ${reward} SHIB!`;
+                resultDiv.style.color = 'var(--secondary)';
+                
+                showConfetti();
+                
+                // Update spins remaining
+                document.getElementById('modalSpinsRemaining').textContent = userData.spinsRemaining;
+                document.getElementById('spinsRemaining').textContent = `Spins left: ${userData.spinsRemaining}/${appConfig.dailySpinLimit}`;
+                
+                if (userData.spinsRemaining === 0) {
+                    spinButton.textContent = 'No Spins Left Today';
+                    spinButton.disabled = true;
+                } else {
+                    spinButton.textContent = 'SPIN AGAIN! 🎯';
+                    spinButton.disabled = false;
+                }
+                
+                isSpinning = false;
+            }, 4000);
+        }
+
+        // Join Telegram function
+        async function joinTelegram() {
+            if (userData.telegramJoined) {
+                alert('You have already joined our Telegram channel!');
+                return;
+            }
+            
+            const telegramUrl = appConfig.telegramChannel;
+            window.open(telegramUrl, '_blank');
+            
+            if (confirm('Have you joined our Telegram channel?')) {
+                userData.balance += appConfig.telegramReward;
+                userData.tasksCompleted += 1;
+                userData.totalEarned += appConfig.telegramReward;
+                userData.telegramJoined = true;
+                
+                await saveUserData();
+                
+                updateBalance();
+                updateProfileStats();
+                updateTaskButtons();
+                showConfetti();
+                alert(`✅ Thank you for joining! ${appConfig.telegramReward} SHIB added to your balance.`);
+            }
+        }
+
+        // Request withdrawal
+        async function requestWithdrawal() {
+            const walletAddress = document.getElementById('walletAddress').value;
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            
+            if (!walletAddress) {
+                alert('Please enter your SHIB wallet address.');
+                return;
+            }
+            
+            if (amount < appConfig.minWithdraw) {
+                alert(`Minimum withdrawal amount is ${appConfig.minWithdraw.toLocaleString()} SHIB.`);
+                return;
+            }
+            
+            if (amount > userData.balance) {
+                alert('Insufficient balance.');
+                return;
+            }
+            
+            if (userData.adsWatched < appConfig.minAdsToWithdraw) {
+                alert(`You need to watch at least ${appConfig.minAdsToWithdraw} ads before withdrawing.`);
+                return;
+            }
+            
+            if (confirm(`Request withdrawal of ${amount.toLocaleString()} SHIB to ${walletAddress}?`)) {
+                // Create withdrawal record
+                const withdrawal = {
+                    amount: amount,
+                    walletAddress: walletAddress,
+                    status: 'pending',
+                    date: new Date().toISOString(),
+                    id: Date.now().toString()
+                };
+                
+                userData.withdrawHistory.unshift(withdrawal);
+                userData.balance -= amount;
+                
+                await saveUserData();
+                
+                // Also save to separate withdrawals collection for admin panel
+                try {
+                    await db.collection('withdrawals').add({
+                        userId: userData.uid,
+                        userData: userData.telegramData,
+                        amount: amount,
+                        walletAddress: walletAddress,
+                        status: 'pending',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error('Error saving withdrawal to admin collection:', error);
+                }
+                
+                alert('✅ Withdrawal request submitted! It will be processed within 24 hours.');
+                closeModal('withdrawModal');
+                
+                // Update UI
+                updateBalance();
+                updateWithdrawRequirements();
+                loadWithdrawHistory();
+                
+                // Reset form
+                document.getElementById('walletAddress').value = '';
+                document.getElementById('withdrawAmount').value = appConfig.minWithdraw;
+            }
+        }
+
+        // Referral system functions
+        function processReferral(referralCode) {
+            // This would be called when a new user signs up with a referral code
+            if (referralCode === userData.referralCode) {
+                userData.referrals.push({
+                    username: 'New User',
+                    joinedAt: new Date().toISOString()
+                });
+                userData.referralEarnings += appConfig.referralReward;
+                userData.balance += appConfig.referralReward;
+                saveUserData();
+                updateReferralInfo();
+                updateBalance();
+                updateProfileStats();
+            }
+        }
+
+        // Load more history
+        function loadMoreHistory() {
+            // In a real app, this would load more records from Firebase
+            alert('Loading full withdrawal history...');
+        }
+
+        // Confetti animation
+        function showConfetti() {
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.background = getRandomColor();
+            confetti.style.animation = `confetti ${1 + Math.random() * 2}s ease-out forwards`;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+
+        function getRandomColor() {
+            const colors = ['#8B5CF6', '#7C3AED', '#06D6A0', '#F59E0B', '#EF4444'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        function copyReferralLink() {
+            const linkInput = document.getElementById('referralLink');
+            linkInput.select();
+            document.execCommand('copy');
+            alert('Referral link copied to clipboard!');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear timers
+                if (timers.spinTimer) clearInterval(timers.spinTimer);
+                if (timers.adsTimer) clearInterval(timers.adsTimer);
+                
+                auth.signOut().then(() => {
+                    alert('Logged out successfully');
+                    closeModal('profileModal');
+                    // Redirect to login or refresh page
+                    location.reload();
+                });
+            }
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // Add sample animations
+            const cards = document.querySelectorAll('.fade-in');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Export functions for global access (for Firebase triggers)
+        window.processReferral = processReferral;
+    </script>
+</body>
+</html>
