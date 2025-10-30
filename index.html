@@ -54,6 +54,162 @@
             padding: 0 16px 80px;
         }
 
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .auth-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--surface-light);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .auth-logo::before {
+            content: "💰";
+            font-size: 3rem;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--surface-light);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid var(--surface-light);
+            background: var(--background);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .auth-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-secondary);
+        }
+
+        .auth-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Main App (hidden by default) */
+        #mainApp {
+            display: none;
+        }
+
         /* Header & Navigation */
         .header {
             background: var(--surface);
@@ -80,8 +236,13 @@
         }
 
         .logo::before {
-            content: "🐕";
-            font-size: 1.75rem;
+            content: "";
+            background-image: url('https://radare.arzfun.com/api/tg/photo?id=AgACAgQAAxkBAAELj4dpAmU-kkvy1vBffzhIyMJ_YRFjXQACZQtrGz6uGFCM2Huk1q2kQAEAAwIAA3gAAzYE');
+            background-size: cover;
+            background-position: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
         }
 
         .profile-btn {
@@ -95,6 +256,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Balance Card */
@@ -143,6 +305,7 @@
             gap: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .action-btn:hover {
@@ -247,6 +410,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .claim-btn:hover {
@@ -282,6 +446,7 @@
             text-decoration: none;
             font-size: 0.75rem;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav-item.active {
@@ -335,6 +500,7 @@
             color: var(--text);
             font-size: 1.5rem;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Advanced Spin Wheel Styles */
@@ -368,8 +534,32 @@
             justify-content: center;
             font-weight: bold;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
             border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .segment-content {
+            transform: rotate(18deg);
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .segment-number {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .segment-label {
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.9;
+            line-height: 1;
         }
 
         .wheel-pointer {
@@ -400,6 +590,7 @@
             box-shadow: 0 8px 20px rgba(6, 214, 160, 0.3);
             text-transform: uppercase;
             letter-spacing: 1px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .spin-btn:hover {
@@ -529,6 +720,88 @@
             background: var(--surface-light);
         }
 
+        /* Modern Loading Screen */
+        .modern-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .modern-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            background-image: url('https://radare.arzfun.com/api/tg/photo?id=AgACAgQAAxkBAAELj4dpAmU-kkvy1vBffzhIyMJ_YRFjXQACZQtrGz6uGFCM2Huk1q2kQAEAAwIAA3gAAzYE');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .loading-subtext {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .modern-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: modern-spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+
+        @keyframes modern-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-progress {
+            width: 200px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .container {
@@ -546,6 +819,10 @@
             .wheel-container {
                 width: 280px;
                 height: 280px;
+            }
+
+            .auth-card {
+                padding: 30px 20px;
             }
         }
 
@@ -596,329 +873,475 @@
             border-radius: var(--border-radius);
             border: 2px solid var(--primary);
         }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* Remove blue tap highlight on mobile */
+        button, .action-btn, .profile-btn, .close-btn, .nav-item {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Fix button focus states */
+        button:focus, .action-btn:focus, .profile-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+
+        /* 24-hour timer styles */
+        .daily-reset-timer {
+            background: var(--surface-light);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            text-align: center;
+            border: 1px solid var(--warning);
+        }
+
+        .timer-title {
+            font-size: 0.9rem;
+            color: var(--warning);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .timer-display {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
-    <!-- Ad Loading Overlay -->
-    <div id="adLoading" class="ad-loading">
-        <div class="ad-loading-content">
-            <div style="font-size: 3rem; margin-bottom: 16px;">📺</div>
-            <h3 style="margin-bottom: 8px;">Loading Ads...</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Please wait while we load the advertisement</p>
-            <div class="loading"></div>
+    <!-- Modern Loading Screen -->
+    <div id="modernLoading" class="modern-loading">
+        <div class="loading-logo"></div>
+        <div class="modern-spinner"></div>
+        <div class="loading-text">SHIBAirDrop Bot</div>
+        <div class="loading-subtext">Loading your SHIB earnings...</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar" id="loadingProgressBar"></div>
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">ShibEarn</div>
-            <button class="profile-btn" onclick="openModal('profileModal')">👤</button>
-        </nav>
-    </header>
-
-    <div class="container">
-        <!-- Balance Card -->
-        <div class="balance-card fade-in">
-            <div class="balance-label">Your SHIB Balance</div>
-            <div class="balance-amount" id="balanceAmount">0 SHIB</div>
-            <div class="balance-subtitle">Minimum withdrawal: <span id="minWithdrawAmount">3,000</span> SHIB</div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="action-btn" onclick="openModal('withdrawModal')">
-                <span class="action-icon">💸</span>
-                <span class="action-label">Withdraw</span>
-            </button>
-            <button class="action-btn" onclick="openModal('referralModal')">
-                <span class="action-icon">👥</span>
-                <span class="action-label">Invite Friends</span>
-            </button>
-        </div>
-
-        <!-- Withdraw Requirements -->
-        <div class="withdraw-card fade-in">
-            <h3 style="margin-bottom: 16px;">Withdraw Requirements</h3>
-            <div class="requirement" id="balanceReq">
-                <span id="balanceStatus">❌</span>
-                <span>Minimum <span id="minWithdrawReq">3,000</span> SHIB balance</span>
+    <!-- Authentication Pages -->
+    <div id="authPage" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">ShibEarn</div>
+                <h1 class="auth-title">Start Earning SHIB</h1>
+                <p class="auth-subtitle">Watch ads, complete tasks, and earn cryptocurrency</p>
             </div>
-            <div class="requirement" id="adsReq">
-                <span id="adsStatus">❌</span>
-                <span>Watch at least <span id="minAdsReq">30</span> ads (Current: <span id="adsWatched">0</span>/<span id="minAdsCount">30</span>)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="adsProgress" style="width: 0%"></div>
-            </div>
-        </div>
 
-        <!-- Available Tasks -->
-        <div class="section-header">
-            <h2 class="section-title">Available Tasks</h2>
-            <a href="#" class="see-all">See All</a>
-        </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
 
-        <div class="task-grid">
-            <!-- Task 1 - Watch Ad -->
-            <div class="task-card fade-in">
-                <div class="task-header">
-                    <div class="task-title">Watch Rewarded Ad</div>
-                    <div class="task-reward">+<span id="adRewardAmount">20</span> SHIB</div>
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="Enter your email" required>
+                    <div class="error-message" id="loginEmailError"></div>
                 </div>
-                <div class="task-description">
-                    Watch a short video ad and earn <span id="adRewardDesc">20</span> SHIB instantly
-                    <div id="adsLimitInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" required>
+                    <div class="error-message" id="loginPasswordError"></div>
                 </div>
-                <div class="task-meta">
-                    <div class="task-type">📺 Video Ad</div>
-                    <div>30 seconds</div>
-                </div>
-                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="watchAd()" id="watchAdBtn">
-                    Watch Ad (+<span id="adRewardBtn">20</span> SHIB)
+                <button type="submit" class="auth-btn" id="loginBtn">
+                    Sign In
                 </button>
-            </div>
+                <div class="auth-footer">
+                    <p>Don't have an account? <span class="auth-link" onclick="switchAuthTab('register')">Create one</span></p>
+                </div>
+            </form>
 
-            <!-- Task 2 - Spin & Win -->
-            <div class="task-card fade-in">
-                <div class="task-header">
-                    <div class="task-title">Spin & Win Daily</div>
-                    <div class="task-reward">Up to 100 SHIB</div>
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="registerName" placeholder="Enter your full name" required>
+                    <div class="error-message" id="registerNameError"></div>
                 </div>
-                <div class="task-description">
-                    Spin the wheel daily and win 10-100 SHIB! 
-                    <div id="spinTimerInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="registerEmail" placeholder="Enter your email" required>
+                    <div class="error-message" id="registerEmailError"></div>
                 </div>
-                <div class="task-meta">
-                    <div class="task-type">🎯 Daily Spin</div>
-                    <div id="spinsRemaining">Spins left: 2/2</div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="registerPassword" placeholder="Create a password" required minlength="6">
+                    <div class="error-message" id="registerPasswordError"></div>
                 </div>
-                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="openModal('spinModal')" id="spinTaskBtn">
-                    Spin & Win
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" id="registerConfirmPassword" placeholder="Confirm your password" required>
+                    <div class="error-message" id="registerConfirmError"></div>
+                </div>
+                <button type="submit" class="auth-btn" id="registerBtn">
+                    Create Account
                 </button>
-            </div>
-
-            <!-- Task 3 - Join Telegram -->
-            <div class="task-card fade-in">
-                <div class="task-header">
-                    <div class="task-title">Join Telegram Channel</div>
-                    <div class="task-reward">+<span id="telegramReward">100</span> SHIB</div>
+                <div class="auth-footer">
+                    <p>Already have an account? <span class="auth-link" onclick="switchAuthTab('login')">Sign in</span></p>
                 </div>
-                <div class="task-description">
-                    Join our official Telegram channel for updates and earn <span id="telegramRewardDesc">100</span> SHIB
-                </div>
-                <div class="task-meta">
-                    <div class="task-type">📱 Social</div>
-                    <div>One-time</div>
-                </div>
-                <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="joinTelegram()" id="joinTelegramBtn">
-                    Join Channel
-                </button>
-            </div>
-        </div>
-
-        <!-- Withdraw History -->
-        <div class="section-header">
-            <h2 class="section-title">Withdraw History</h2>
-            <a href="#" class="see-all" onclick="loadMoreHistory()">See All</a>
-        </div>
-
-        <div class="withdraw-card">
-            <div id="withdrawHistory">
-                <div style="text-align: center; color: var(--text-secondary); padding: 20px;">
-                    No withdrawal history yet
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active">
-            <span class="nav-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="#" class="nav-item" onclick="openModal('withdrawModal')">
-            <span class="nav-icon">💸</span>
-            <span>Withdraw</span>
-        </a>
-        <a href="#" class="nav-item" onclick="openModal('referralModal')">
-            <span class="nav-icon">👥</span>
-            <span>Referrals</span>
-        </a>
-        <a href="#" class="nav-item" onclick="openModal('profileModal')">
-            <span class="nav-icon">📊</span>
-            <span>Profile</span>
-        </a>
-    </nav>
-
-    <!-- Withdraw Modal -->
-    <div id="withdrawModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Withdraw SHIB</h3>
-                <button class="close-btn" onclick="closeModal('withdrawModal')">&times;</button>
+    <!-- Main Application -->
+    <div id="mainApp">
+        <!-- Ad Loading Overlay -->
+        <div id="adLoading" class="ad-loading">
+            <div class="ad-loading-content">
+                <div style="font-size: 3rem; margin-bottom: 16px;">📺</div>
+                <h3 style="margin-bottom: 8px;">Loading Ads...</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">Please wait while we load the advertisement</p>
+                <div class="loading"></div>
             </div>
-            <div style="margin-bottom: 20px;">
-                <div style="color: var(--text-secondary); margin-bottom: 8px;">Available Balance</div>
-                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;" id="withdrawBalance">0 SHIB</div>
-                
-                <div id="withdrawRequirements">
-                    <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                        <div style="color: var(--warning); font-size: 0.9rem; margin-bottom: 8px;">⚠️ Withdraw Requirements</div>
-                        <div style="color: var(--text-secondary); font-size: 0.85rem;">
-                            • Minimum <span id="withdrawMinAmount">3,000</span> SHIB balance<br>
-                            • Watch at least <span id="withdrawMinAds">30</span> ads<br>
-                            <br>
-                            <strong>Current Status:</strong><br>
-                            <span id="withdrawBalanceStatus">❌ Balance: 0/3,000 SHIB</span><br>
-                            <span id="withdrawAdsStatus">❌ Ads Watched: 0/30</span>
-                        </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <div class="logo">ShibEarn</div>
+                <button class="profile-btn" onclick="openModal('profileModal')">👤</button>
+            </nav>
+        </header>
+
+        <div class="container">
+            <!-- Balance Card -->
+            <div class="balance-card fade-in">
+                <div class="balance-label">Your SHIB Balance</div>
+                <div class="balance-amount" id="balanceAmount">0 SHIB</div>
+                <div class="balance-subtitle">Minimum withdrawal: <span id="minWithdrawAmount">3,000</span> SHIB</div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn" onclick="openModal('withdrawModal')">
+                    <span class="action-icon">💸</span>
+                    <span class="action-label">Withdraw</span>
+                </button>
+                <button class="action-btn" onclick="openModal('referralModal')">
+                    <span class="action-icon">👥</span>
+                    <span class="action-label">Invite Friends</span>
+                </button>
+            </div>
+
+            <!-- Daily Reset Timer -->
+            <div id="dailyResetTimer" class="daily-reset-timer" style="display: none;">
+                <div class="timer-title">⏰ Daily Reset In</div>
+                <div class="timer-display" id="dailyTimerDisplay">24:00:00</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
+                    Resets daily at 00:00 UTC
+                </div>
+            </div>
+
+            <!-- Withdraw Requirements -->
+            <div class="withdraw-card fade-in">
+                <h3 style="margin-bottom: 16px;">Withdraw Requirements</h3>
+                <div class="requirement" id="balanceReq">
+                    <span id="balanceStatus">❌</span>
+                    <span>Minimum <span id="minWithdrawReq">3,000</span> SHIB balance</span>
+                </div>
+                <div class="requirement" id="adsReq">
+                    <span id="adsStatus">❌</span>
+                    <span>Watch at least <span id="minAdsReq">30</span> ads (Current: <span id="adsWatched">0</span>/<span id="minAdsCount">30</span>)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="adsProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Available Tasks -->
+            <div class="section-header">
+                <h2 class="section-title">Available Tasks</h2>
+                <a href="#" class="see-all">See All</a>
+            </div>
+
+            <div class="task-grid">
+                <!-- Task 1 - Watch Ad -->
+                <div class="task-card fade-in">
+                    <div class="task-header">
+                        <div class="task-title">Watch Rewarded Ad</div>
+                        <div class="task-reward">+<span id="adRewardAmount">20</span> SHIB</div>
                     </div>
-                </div>
-
-                <div id="withdrawForm" style="display: none;">
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Wallet Address</label>
-                    <input type="text" id="walletAddress" placeholder="Enter your SHIB wallet address" 
-                           style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--surface-light); 
-                                  background: var(--background); color: var(--text); margin-bottom: 20px;">
-                    
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Amount to Withdraw</label>
-                    <input type="number" id="withdrawAmount" min="3000" value="3000" 
-                           style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--surface-light); 
-                                  background: var(--background); color: var(--text); margin-bottom: 20px;">
-                </div>
-            </div>
-            <button class="claim-btn" id="withdrawBtn" style="width: 100%;" onclick="requestWithdrawal()" disabled>
-                Requirements Not Met
-            </button>
-        </div>
-    </div>
-
-    <!-- Spin Modal -->
-    <div id="spinModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Spin & Win SHIB! 🎯</h3>
-                <button class="close-btn" onclick="closeModal('spinModal')">&times;</button>
-            </div>
-            <div style="text-align: center;">
-                <div class="wheel-container">
-                    <div class="wheel-pointer"></div>
-                    <div class="wheel" id="wheel">
-                        <!-- Wheel segments will be generated by JavaScript -->
+                    <div class="task-description">
+                        Watch a short video ad and earn <span id="adRewardDesc">20</span> SHIB instantly
+                        <div id="adsLimitInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
                     </div>
+                    <div class="task-meta">
+                        <div class="task-type">📺 Video Ad</div>
+                        <div>30 seconds</div>
+                    </div>
+                    <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="watchAd()" id="watchAdBtn">
+                        Watch Ad (+<span id="adRewardBtn">20</span> SHIB)
+                    </button>
                 </div>
-                <div style="margin: 20px 0;">
-                    <div style="font-size: 1.1rem; margin-bottom: 8px;">Spins Remaining: <span id="modalSpinsRemaining">0</span>/<span id="dailySpinLimit">2</span></div>
-                    <div id="spinTimer" class="timer" style="display: none; margin: 10px auto;"></div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Win 10-100 SHIB per spin!</div>
-                </div>
-                <button class="spin-btn" id="spinButton" onclick="spinWheel()">SPIN NOW! 🎯</button>
-                <div id="spinResult" style="margin-top: 20px; font-size: 1.2rem; font-weight: 700;"></div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Referral Modal -->
-    <div id="referralModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Invite & Earn</h3>
-                <button class="close-btn" onclick="closeModal('referralModal')">&times;</button>
-            </div>
-            <div style="text-align: center; margin-bottom: 24px;">
-                <div style="font-size: 3rem; margin-bottom: 16px;">👥</div>
-                <div style="font-size: 1.1rem; margin-bottom: 8px;">Invite friends and earn <span id="referralRewardAmount">200</span> SHIB each</div>
-                <div style="color: var(--text-secondary); font-size: 0.9rem;">
-                    Your friends will join our community
+                <!-- Task 2 - Spin & Win -->
+                <div class="task-card fade-in">
+                    <div class="task-header">
+                        <div class="task-title">Spin & Win Daily</div>
+                        <div class="task-reward">Up to 100 SHIB</div>
+                    </div>
+                    <div class="task-description">
+                        Spin the wheel daily and win 10-100 SHIB! 
+                        <div id="spinTimerInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--warning);"></div>
+                    </div>
+                    <div class="task-meta">
+                        <div class="task-type">🎯 Daily Spin</div>
+                        <div id="spinsRemaining">Spins left: 2/2</div>
+                    </div>
+                    <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="openModal('spinModal')" id="spinTaskBtn">
+                        Spin & Win
+                    </button>
                 </div>
-            </div>
-            
-            <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Your Referral Link</div>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="referralLink" readonly 
-                           style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--surface-light); 
-                           background: var(--background); color: var(--text); font-size: 0.9rem;">
-                    <button onclick="copyReferralLink()" 
-                            style="background: var(--primary); border: none; color: white; padding: 12px 16px; border-radius: 8px; cursor: pointer;">
-                        Copy
+
+                <!-- Task 3 - Join Telegram -->
+                <div class="task-card fade-in">
+                    <div class="task-header">
+                        <div class="task-title">Join Telegram Channel</div>
+                        <div class="task-reward">+<span id="telegramReward">100</span> SHIB</div>
+                    </div>
+                    <div class="task-description">
+                        Join our official Telegram channel for updates and earn <span id="telegramRewardDesc">100</span> SHIB
+                    </div>
+                    <div class="task-meta">
+                        <div class="task-type">📱 Social</div>
+                        <div>One-time</div>
+                    </div>
+                    <button class="claim-btn" style="width: 100%; margin-top: 12px;" onclick="joinTelegram()" id="joinTelegramBtn">
+                        Join Channel
                     </button>
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center; margin-bottom: 20px;">
-                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralsCount">0</div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Friends Joined</div>
-                </div>
-                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralEarnings">0</div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">SHIB Earned</div>
-                </div>
+            <!-- Withdraw History -->
+            <div class="section-header">
+                <h2 class="section-title">Withdraw History</h2>
+                <a href="#" class="see-all" onclick="loadMoreHistory()">See All</a>
             </div>
 
-            <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
-                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Recent Referrals</div>
-                <div id="recentReferrals" style="max-height: 150px; overflow-y: auto;">
-                    <div style="text-align: center; color: var(--text-secondary); padding: 10px;">
-                        No referrals yet
+            <div class="withdraw-card">
+                <div id="withdrawHistory">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 20px;">
+                        No withdrawal history yet
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Profile Modal -->
-    <div id="profileModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Profile</h3>
-                <button class="close-btn" onclick="closeModal('profileModal')">&times;</button>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" onclick="openModal('withdrawModal')">
+                <span class="nav-icon">💸</span>
+                <span>Withdraw</span>
+            </a>
+            <a href="#" class="nav-item" onclick="openModal('referralModal')">
+                <span class="nav-icon">👥</span>
+                <span>Referrals</span>
+            </a>
+            <a href="#" class="nav-item" onclick="openModal('profileModal')">
+                <span class="nav-icon">📊</span>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+        <!-- Withdraw Modal -->
+        <div id="withdrawModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Withdraw SHIB</h3>
+                    <button class="close-btn" onclick="closeModal('withdrawModal')">&times;</button>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="color: var(--text-secondary); margin-bottom: 8px;">Available Balance</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;" id="withdrawBalance">0 SHIB</div>
+                    
+                    <div id="withdrawRequirements">
+                        <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                            <div style="color: var(--warning); font-size: 0.9rem; margin-bottom: 8px;">⚠️ Withdraw Requirements</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">
+                                • Minimum <span id="withdrawMinAmount">3,000</span> SHIB balance<br>
+                                • Watch at least <span id="withdrawMinAds">30</span> ads<br>
+                                <br>
+                                <strong>Current Status:</strong><br>
+                                <span id="withdrawBalanceStatus">❌ Balance: 0/3,000 SHIB</span><br>
+                                <span id="withdrawAdsStatus">❌ Ads Watched: 0/30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="withdrawForm" style="display: none;">
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">SHIB BEP20 Wallet Address</label>
+                            <input type="text" id="walletAddress" placeholder="Enter your SHIB BEP20 wallet address" class="form-input">
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
+                                Make sure this is a SHIB BEP20 compatible wallet address
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Amount to Withdraw</label>
+                            <input type="number" id="withdrawAmount" min="3000" value="3000" class="form-input">
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
+                                Minimum: 3,000 SHIB
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="claim-btn" id="withdrawBtn" style="width: 100%;" onclick="requestWithdrawal()" disabled>
+                    Requirements Not Met
+                </button>
             </div>
-            <div style="text-align: center; margin-bottom: 24px;">
-                <img id="profilePicture" class="profile-pic" src="" alt="Profile" onerror="this.style.display='none'">
-                <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; 
-                          display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px; display: none;" id="defaultProfilePic">
-                    👤
+        </div>
+
+        <!-- Spin Modal -->
+        <div id="spinModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Spin & Win SHIB! 🎯</h3>
+                    <button class="close-btn" onclick="closeModal('spinModal')">&times;</button>
                 </div>
-                <div style="font-size: 1.2rem; font-weight: 600;" id="profileName">Loading...</div>
-                <div style="color: var(--text-secondary);" id="profileUsername">@username</div>
-                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">ID: <span id="profileUserId">-</span></div>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span>Member Since</span>
-                    <span id="memberSince">-</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span>Tasks Completed</span>
-                    <span id="profileTasksCompleted">0</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span>Ads Watched</span>
-                    <span id="profileAdsWatched">0</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span>Total Earned</span>
-                    <span style="color: var(--secondary);" id="profileTotalEarned">0 SHIB</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <span>Referral Earnings</span>
-                    <span style="color: var(--secondary);" id="profileReferralEarnings">0 SHIB</span>
+                <div style="text-align: center;">
+                    <div class="wheel-container">
+                        <div class="wheel-pointer"></div>
+                        <div class="wheel" id="wheel">
+                            <!-- Wheel segments will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <div style="font-size: 1.1rem; margin-bottom: 8px;">Spins Remaining: <span id="modalSpinsRemaining">0</span>/<span id="dailySpinLimit">2</span></div>
+                        <div id="spinTimer" class="timer" style="display: none; margin: 10px auto;"></div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Win 10-100 SHIB per spin!</div>
+                    </div>
+                    <button class="spin-btn" id="spinButton" onclick="spinWheel()">SPIN NOW! 🎯</button>
+                    <div id="spinResult" style="margin-top: 20px; font-size: 1.2rem; font-weight: 700;"></div>
                 </div>
             </div>
-            
-            <button class="claim-btn" style="width: 100%; background: var(--danger);" onclick="logout()">
-                Logout
-            </button>
+        </div>
+
+        <!-- Referral Modal -->
+        <div id="referralModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Invite & Earn</h3>
+                    <button class="close-btn" onclick="closeModal('referralModal')">&times;</button>
+                </div>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">👥</div>
+                    <div style="font-size: 1.1rem; margin-bottom: 8px;">Invite friends and earn <span id="referralRewardAmount">200</span> SHIB each</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Your friends will join our community
+                    </div>
+                </div>
+                
+                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Your Referral Link</div>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="referralLink" readonly class="form-input" style="flex: 1;">
+                        <button onclick="copyReferralLink()" class="claim-btn" style="white-space: nowrap;">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center; margin-bottom: 20px;">
+                    <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralsCount">0</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Friends Joined</div>
+                    </div>
+                    <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--secondary);" id="referralEarnings">0</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">SHIB Earned</div>
+                    </div>
+                </div>
+
+                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px;">
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Recent Referrals</div>
+                    <div id="recentReferrals" style="max-height: 150px; overflow-y: auto;">
+                        <div style="text-align: center; color: var(--text-secondary); padding: 10px;">
+                            No referrals yet
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Profile</h3>
+                    <button class="close-btn" onclick="closeModal('profileModal')">&times;</button>
+                </div>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; 
+                              display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px;" id="defaultProfilePic">
+                        <img src="https://radare.arzfun.com/api/tg/photo?id=AgACAgQAAxkBAAELj4dpAmU-kkvy1vBffzhIyMJ_YRFjXQACZQtrGz6uGFCM2Huk1q2kQAEAAwIAA3gAAzYE" 
+                             style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <div style="font-size: 1.2rem; font-weight: 600;" id="profileName">Loading...</div>
+                    <div style="color: var(--text-secondary);" id="profileEmail">Loading...</div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <span>Member Since</span>
+                        <span id="memberSince">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <span>Tasks Completed</span>
+                        <span id="profileTasksCompleted">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <span>Ads Watched</span>
+                        <span id="profileAdsWatched">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <span>Total Earned</span>
+                        <span style="color: var(--secondary);" id="profileTotalEarned">0 SHIB</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                        <span>Referral Earnings</span>
+                        <span style="color: var(--secondary);" id="profileReferralEarnings">0 SHIB</span>
+                    </div>
+                </div>
+                
+                <!-- Bot Information -->
+                <div style="background: var(--surface-light); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Official Bot</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; border-radius: 8px; background-image: url('https://radare.arzfun.com/api/tg/photo?id=AgACAgQAAxkBAAELj4dpAmU-kkvy1vBffzhIyMJ_YRFjXQACZQtrGz6uGFCM2Huk1q2kQAEAAwIAA3gAAzYE'); background-size: cover;"></div>
+                        <div>
+                            <div style="font-weight: 600;">SHIBAirDrop Bot</div>
+                            <a href="https://t.me/SHIBAirdrop81_bot" style="color: var(--primary); font-size: 0.85rem; text-decoration: none;">@SHIBAirdrop81_bot</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="claim-btn" style="width: 100%; background: var(--danger);" onclick="logout()">
+                    Logout
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Firebase Configuration - REPLACE WITH YOUR CONFIG
+        // Firebase Configuration
         const firebaseConfig = {
   apiKey: "AIzaSyBa1OxCbgE_hgfhLb2yeya37n8BEIqihn8",
   authDomain: "quckikbwt.firebaseapp.com",
@@ -927,6 +1350,7 @@
   messagingSenderId: "526009462983",
   appId: "1:526009462983:web:392c1cb89d899eaf9e0ee2"
 };
+
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -942,12 +1366,14 @@
             adReward: 20,
             telegramReward: 100,
             referralReward: 200,
-            telegramChannel: "https://t.me/your_channel_here"
+            telegramChannel: "https://t.me/SHIBAirdrop81_bot"
         };
 
         // User Data
         let userData = {
             uid: null,
+            displayName: "",
+            email: "",
             balance: 0,
             adsWatched: 0,
             adsWatchedToday: 0,
@@ -963,39 +1389,307 @@
             lastAdReset: null,
             lastAdWatch: null,
             isBlacklisted: false,
-            telegramData: {}
+            createdAt: null
         };
 
-        // Spin rewards (in SHIB)
+        // Spin rewards (in SHIB) - Adjusted probabilities for easier lower amounts
         const spinRewards = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        // Weighted probabilities (higher weights for lower amounts)
+        const spinWeights = [25, 20, 15, 12, 10, 8, 5, 3, 1, 1];
+        
         let isSpinning = false;
         let timers = {};
         let isWatchingAd = false;
+        let loadingProgressInterval;
+        let userDataUnsubscribe = null;
 
-        // Initialize the application
-        async function initApp() {
+        // Show modern loading screen
+        function showModernLoading() {
+            const loadingScreen = document.getElementById('modernLoading');
+            const progressBar = document.getElementById('loadingProgressBar');
+            
+            loadingScreen.classList.remove('hidden');
+            
+            // Clear any existing interval
+            if (loadingProgressInterval) {
+                clearInterval(loadingProgressInterval);
+            }
+            
+            // Reset progress bar
+            progressBar.style.width = '0%';
+            
+            // Simulate loading progress
+            let progress = 0;
+            loadingProgressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90; // Stop at 90% until we're ready
+                progressBar.style.width = progress + '%';
+            }, 200);
+        }
+
+        // Hide modern loading screen
+        function hideModernLoading() {
+            const loadingScreen = document.getElementById('modernLoading');
+            const progressBar = document.getElementById('loadingProgressBar');
+            
+            // Complete the progress bar
+            progressBar.style.width = '100%';
+            
+            // Clear the progress interval
+            if (loadingProgressInterval) {
+                clearInterval(loadingProgressInterval);
+            }
+            
+            // Hide the loading screen after a short delay
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 500);
+        }
+
+        // Check authentication state on load
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                // User is signed in - show loading screen
+                showModernLoading();
+                
+                // Load user data with real-time listener
+                userDataUnsubscribe = await loadUserData(user.uid);
+                await checkDailyReset();
+                
+                // Show main app after loading
+                setTimeout(() => {
+                    showMainApp();
+                    initPage();
+                    generateWheel();
+                    startTimers();
+                    hideModernLoading();
+                }, 1500);
+            } else {
+                // User is signed out
+                if (userDataUnsubscribe) {
+                    userDataUnsubscribe();
+                    userDataUnsubscribe = null;
+                }
+                showAuthPage();
+                // Ensure loading screen is hidden
+                hideModernLoading();
+            }
+        });
+
+        // Switch between login and register tabs
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            document.querySelector(`.auth-tab[onclick="switchAuthTab('${tab}')"]`).classList.add('active');
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+
+        // Handle user registration
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            // Clear previous errors
+            clearErrors('register');
+
+            // Validation
+            if (password !== confirmPassword) {
+                showError('registerConfirmError', 'Passwords do not match');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('registerPasswordError', 'Password must be at least 6 characters');
+                return;
+            }
+
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Creating Account...';
+
             try {
-                // Load app configuration first
-                await loadAppConfig();
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
 
-                // Initialize Telegram Web App if available
-                await initTelegramWebApp();
+                // Update profile
+                await user.updateProfile({
+                    displayName: name
+                });
 
-                // Check authentication state
-                auth.onAuthStateChanged(async (user) => {
-                    if (user) {
-                        await loadUserData(user.uid);
-                        await checkDailyReset();
-                        initPage();
-                        generateWheel();
-                        startTimers();
-                    } else {
-                        await anonymousLogin();
+                // Initialize user data in Firestore
+                await initializeUserData(user.uid, name, email);
+
+                // User will be automatically signed in and onAuthStateChanged will trigger
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                handleAuthError(error, 'register');
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+        }
+
+        // Handle user login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Clear previous errors
+            clearErrors('login');
+
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Signing In...';
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                // onAuthStateChanged will handle the rest
+            } catch (error) {
+                console.error('Login error:', error);
+                handleAuthError(error, 'login');
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        // Handle authentication errors
+        function handleAuthError(error, formType) {
+            let errorMessage = 'An error occurred. Please try again.';
+            
+            switch (error.code) {
+                case 'email-already-in-use':
+                    errorMessage = 'This email is already registered.';
+                    showError(formType + 'EmailError', errorMessage);
+                    break;
+                case 'invalid-email':
+                    errorMessage = 'Invalid email address.';
+                    showError(formType + 'EmailError', errorMessage);
+                    break;
+                case 'weak-password':
+                    errorMessage = 'Password is too weak.';
+                    showError(formType + 'PasswordError', errorMessage);
+                    break;
+                case 'user-not-found':
+                    errorMessage = 'No account found with this email.';
+                    showError(formType + 'EmailError', errorMessage);
+                    break;
+                case 'wrong-password':
+                    errorMessage = 'Incorrect password.';
+                    showError(formType + 'PasswordError', errorMessage);
+                    break;
+                default:
+                    alert(errorMessage);
+            }
+        }
+
+        // Show error message
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        // Clear error messages
+        function clearErrors(formType) {
+            const errors = document.querySelectorAll(`#${formType}Form .error-message`);
+            errors.forEach(error => {
+                error.textContent = '';
+                error.style.display = 'none';
+            });
+        }
+
+        // Show authentication page
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+
+        // Show main application
+        function showMainApp() {
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+        }
+
+        // Initialize user data in Firestore
+        async function initializeUserData(uid, name, email) {
+            const userRef = db.collection('users').doc(uid);
+            const userDoc = await userRef.get();
+            
+            if (!userDoc.exists) {
+                userData.uid = uid;
+                userData.displayName = name;
+                userData.email = email;
+                userData.referralCode = generateReferralCode();
+                userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                userData.lastSpinReset = firebase.firestore.Timestamp.now();
+                userData.lastAdReset = firebase.firestore.Timestamp.now();
+                
+                await userRef.set(userData);
+            }
+        }
+
+        // Load user data from Firestore with real-time listener
+        async function loadUserData(uid) {
+            return new Promise((resolve, reject) => {
+                const unsubscribe = db.collection('users').doc(uid).onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        Object.assign(userData, data);
+                        userData.uid = uid;
+
+                        // Check if user is blacklisted
+                        if (userData.isBlacklisted) {
+                            alert('Your account has been suspended. Please contact support.');
+                            auth.signOut();
+                            return;
+                        }
+
+                        // Update the UI with the latest data
+                        updateBalance();
+                        updateWithdrawRequirements();
+                        updateProfileStats();
+                        updateReferralInfo();
+                        loadWithdrawHistory();
+                        updateTaskButtons();
                     }
+                    resolve(unsubscribe);
+                }, (error) => {
+                    console.error('Error loading user data:', error);
+                    reject(error);
+                });
+            });
+        }
+
+        // Save user data to Firestore
+        async function saveUserData() {
+            if (!userData.uid) return;
+            
+            try {
+                await db.collection('users').doc(userData.uid).update({
+                    balance: userData.balance,
+                    adsWatched: userData.adsWatched,
+                    adsWatchedToday: userData.adsWatchedToday,
+                    spinsRemaining: userData.spinsRemaining,
+                    tasksCompleted: userData.tasksCompleted,
+                    totalEarned: userData.totalEarned,
+                    telegramJoined: userData.telegramJoined,
+                    referrals: userData.referrals,
+                    referralEarnings: userData.referralEarnings,
+                    withdrawHistory: userData.withdrawHistory,
+                    lastSpinReset: userData.lastSpinReset,
+                    lastAdReset: userData.lastAdReset,
+                    lastAdWatch: userData.lastAdWatch,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                 });
             } catch (error) {
-                console.error('Initialization error:', error);
-                initDemoMode();
+                console.error('Error saving user data:', error);
             }
         }
 
@@ -1028,131 +1722,6 @@
             document.getElementById('withdrawMinAmount').textContent = appConfig.minWithdraw.toLocaleString();
             document.getElementById('withdrawMinAds').textContent = appConfig.minAdsToWithdraw;
             document.getElementById('dailySpinLimit').textContent = appConfig.dailySpinLimit;
-        }
-
-        // Initialize Telegram Web App
-        async function initTelegramWebApp() {
-            // Check if we're in Telegram Web App
-            if (window.Telegram && Telegram.WebApp) {
-                const tg = Telegram.WebApp;
-                tg.ready();
-                tg.expand();
-                
-                // Get Telegram user data
-                const user = tg.initDataUnsafe?.user;
-                if (user) {
-                    userData.telegramData = {
-                        id: user.id,
-                        firstName: user.first_name,
-                        lastName: user.last_name,
-                        username: user.username,
-                        photoUrl: user.photo_url,
-                        languageCode: user.language_code
-                    };
-
-                    // Update profile modal with real Telegram data
-                    updateTelegramProfile();
-                }
-            }
-        }
-
-        // Update Telegram profile data
-        function updateTelegramProfile() {
-            if (userData.telegramData.id) {
-                document.getElementById('profileName').textContent = 
-                    `${userData.telegramData.firstName || ''} ${userData.telegramData.lastName || ''}`.trim() || 'Telegram User';
-                document.getElementById('profileUsername').textContent = 
-                    userData.telegramData.username ? `@${userData.telegramData.username}` : 'No username';
-                document.getElementById('profileUserId').textContent = userData.telegramData.id;
-
-                if (userData.telegramData.photoUrl) {
-                    document.getElementById('profilePicture').src = userData.telegramData.photoUrl;
-                    document.getElementById('profilePicture').style.display = 'block';
-                    document.getElementById('defaultProfilePic').style.display = 'none';
-                } else {
-                    document.getElementById('profilePicture').style.display = 'none';
-                    document.getElementById('defaultProfilePic').style.display = 'flex';
-                }
-            }
-        }
-
-        // Anonymous login for demo
-        async function anonymousLogin() {
-            try {
-                const result = await auth.signInAnonymously();
-                const user = result.user;
-                await initializeUserData(user.uid);
-                await loadUserData(user.uid);
-                initPage();
-                generateWheel();
-                startTimers();
-            } catch (error) {
-                console.error('Login error:', error);
-                initDemoMode();
-            }
-        }
-
-        // Initialize user data in Firestore
-        async function initializeUserData(uid) {
-            const userRef = db.collection('users').doc(uid);
-            const userDoc = await userRef.get();
-            
-            if (!userDoc.exists) {
-                userData.uid = uid;
-                userData.referralCode = generateReferralCode();
-                userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                userData.lastSpinReset = firebase.firestore.Timestamp.now();
-                userData.lastAdReset = firebase.firestore.Timestamp.now();
-                
-                await userRef.set(userData);
-            }
-        }
-
-        // Load user data from Firestore
-        async function loadUserData(uid) {
-            try {
-                const userDoc = await db.collection('users').doc(uid).get();
-                if (userDoc.exists) {
-                    const data = userDoc.data();
-                    Object.assign(userData, data);
-                    userData.uid = uid;
-
-                    // Check if user is blacklisted
-                    if (userData.isBlacklisted) {
-                        alert('Your account has been suspended. Please contact support.');
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
-        }
-
-        // Save user data to Firestore
-        async function saveUserData() {
-            if (!userData.uid) return;
-            
-            try {
-                await db.collection('users').doc(userData.uid).update({
-                    balance: userData.balance,
-                    adsWatched: userData.adsWatched,
-                    adsWatchedToday: userData.adsWatchedToday,
-                    spinsRemaining: userData.spinsRemaining,
-                    tasksCompleted: userData.tasksCompleted,
-                    totalEarned: userData.totalEarned,
-                    telegramJoined: userData.telegramJoined,
-                    referrals: userData.referrals,
-                    referralEarnings: userData.referralEarnings,
-                    withdrawHistory: userData.withdrawHistory,
-                    lastSpinReset: userData.lastSpinReset,
-                    lastAdReset: userData.lastAdReset,
-                    lastAdWatch: userData.lastAdWatch,
-                    telegramData: userData.telegramData,
-                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (error) {
-                console.error('Error saving user data:', error);
-            }
         }
 
         // Check and reset daily limits
@@ -1192,16 +1761,51 @@
             loadWithdrawHistory();
             updateReferralLink();
             updateTaskButtons();
+            loadAppConfig();
+            updateDailyResetTimer();
         }
 
         // Start timers for spin and ad resets
         function startTimers() {
             updateSpinTimer();
             updateAdsLimitInfo();
+            updateDailyResetTimer();
             
             // Update timers every second
             timers.spinTimer = setInterval(updateSpinTimer, 1000);
             timers.adsTimer = setInterval(updateAdsLimitInfo, 1000);
+            timers.dailyTimer = setInterval(updateDailyResetTimer, 1000);
+        }
+
+        // Update daily reset timer
+        function updateDailyResetTimer() {
+            const timerElement = document.getElementById('dailyResetTimer');
+            const timerDisplay = document.getElementById('dailyTimerDisplay');
+            
+            // Show timer only when ads limit is reached
+            if (userData.adsWatchedToday >= appConfig.dailyAdsLimit) {
+                const nextReset = getNextAdResetTime();
+                const now = new Date();
+                const timeLeft = nextReset - now;
+                
+                if (timeLeft > 0) {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    timerDisplay.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    timerElement.style.display = 'block';
+                } else {
+                    // Reset ads if time is up
+                    userData.adsWatchedToday = 0;
+                    userData.lastAdReset = firebase.firestore.Timestamp.now();
+                    saveUserData();
+                    updateTaskButtons();
+                    timerElement.style.display = 'none';
+                }
+            } else {
+                timerElement.style.display = 'none';
+            }
         }
 
         // Update spin timer display
@@ -1304,15 +1908,6 @@
             document.getElementById('spinsRemaining').textContent = `Spins left: ${userData.spinsRemaining}/${appConfig.dailySpinLimit}`;
         }
 
-        // Demo mode fallback
-        function initDemoMode() {
-            userData.referralCode = 'DEMO123';
-            initPage();
-            generateWheel();
-            startTimers();
-            console.log('Running in demo mode - no Firebase connection');
-        }
-
         // Update balance display
         function updateBalance() {
             document.getElementById('balanceAmount').textContent = userData.balance.toLocaleString() + ' SHIB';
@@ -1381,6 +1976,10 @@
             document.getElementById('profileTotalEarned').textContent = userData.totalEarned.toLocaleString() + ' SHIB';
             document.getElementById('profileReferralEarnings').textContent = userData.referralEarnings.toLocaleString() + ' SHIB';
             
+            // Set profile information
+            document.getElementById('profileName').textContent = userData.displayName || 'User';
+            document.getElementById('profileEmail').textContent = userData.email || 'No email';
+            
             // Set member since date
             if (userData.createdAt) {
                 const date = userData.createdAt.toDate ? userData.createdAt.toDate() : new Date();
@@ -1409,7 +2008,7 @@
 
         // Update referral link
         function updateReferralLink() {
-            const referralLink = `https://t.me/ShibEarnBot?start=ref_${userData.referralCode}`;
+            const referralLink = `https://t.me/SHIBAirdrop81_bot?start=${userData.referralCode}`;
             document.getElementById('referralLink').value = referralLink;
         }
 
@@ -1446,7 +2045,7 @@
             historyContainer.innerHTML = historyHTML;
         }
 
-        // Generate advanced spin wheel with proper numbers and styling
+        // Generate advanced spin wheel with clear numbers
         function generateWheel() {
             const wheel = document.getElementById('wheel');
             wheel.innerHTML = '';
@@ -1464,10 +2063,11 @@
                 segment.style.transform = `rotate(${i * 36}deg)`;
                 segment.style.background = `linear-gradient(135deg, ${colors[i]}, ${darkenColor(colors[i], 20)})`;
                 segment.style.borderLeft = '2px solid rgba(255,255,255,0.3)';
+                
                 segment.innerHTML = `
-                    <div style="transform: rotate(18deg); text-align: center; width: 100%;">
-                        <div style="font-size: 16px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">${spinRewards[i]}</div>
-                        <div style="font-size: 11px; font-weight: 600; opacity: 0.9;">SHIB</div>
+                    <div class="segment-content">
+                        <div class="segment-number">${spinRewards[i]}</div>
+                        <div class="segment-label">SHIB</div>
                     </div>
                 `;
                 wheel.appendChild(segment);
@@ -1483,6 +2083,21 @@
             return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
                 (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
                 (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+
+        // Get weighted random index for spin wheel (easier to get lower amounts)
+        function getWeightedRandomIndex() {
+            const totalWeight = spinWeights.reduce((a, b) => a + b, 0);
+            let random = Math.random() * totalWeight;
+            
+            for (let i = 0; i < spinWeights.length; i++) {
+                random -= spinWeights[i];
+                if (random <= 0) {
+                    return i;
+                }
+            }
+            
+            return 0; // fallback
         }
 
         // Watch ad function with both Monetag and Giga ads
@@ -1601,6 +2216,7 @@
             updateWithdrawRequirements();
             updateProfileStats();
             updateAdsLimitInfo();
+            updateDailyResetTimer();
             
             showConfetti();
             alert(`🎉 Ad completed! +${appConfig.adReward} SHIB added to your balance.`);
@@ -1612,7 +2228,7 @@
             isWatchingAd = false;
         }
 
-        // Spin wheel function
+        // Spin wheel function with weighted probabilities
         async function spinWheel() {
             if (isSpinning || userData.spinsRemaining <= 0) return;
             
@@ -1626,8 +2242,8 @@
             spinButton.textContent = 'Spinning...';
             resultDiv.textContent = '';
             
-            // Random spin result
-            const rewardIndex = Math.floor(Math.random() * spinRewards.length);
+            // Get weighted random result
+            const rewardIndex = getWeightedRandomIndex();
             const reward = spinRewards[rewardIndex];
             
             // Calculate spin degrees (multiple full rotations plus offset to land on selected segment)
@@ -1704,7 +2320,13 @@
             const amount = parseInt(document.getElementById('withdrawAmount').value);
             
             if (!walletAddress) {
-                alert('Please enter your SHIB wallet address.');
+                alert('Please enter your SHIB BEP20 wallet address.');
+                return;
+            }
+            
+            // Validate SHIB BEP20 address format (basic validation)
+            if (!walletAddress.startsWith('0x') || walletAddress.length !== 42) {
+                alert('Please enter a valid SHIB BEP20 wallet address (should start with 0x and be 42 characters long).');
                 return;
             }
             
@@ -1742,7 +2364,10 @@
                 try {
                     await db.collection('withdrawals').add({
                         userId: userData.uid,
-                        userData: userData.telegramData,
+                        userData: {
+                            displayName: userData.displayName,
+                            email: userData.email
+                        },
                         amount: amount,
                         walletAddress: walletAddress,
                         status: 'pending',
@@ -1843,20 +2468,20 @@
                 // Clear timers
                 if (timers.spinTimer) clearInterval(timers.spinTimer);
                 if (timers.adsTimer) clearInterval(timers.adsTimer);
+                if (timers.dailyTimer) clearInterval(timers.dailyTimer);
                 
-                auth.signOut().then(() => {
-                    alert('Logged out successfully');
-                    closeModal('profileModal');
-                    // Redirect to login or refresh page
-                    location.reload();
-                });
+                // Unsubscribe from user data
+                if (userDataUnsubscribe) {
+                    userDataUnsubscribe();
+                    userDataUnsubscribe = null;
+                }
+                
+                auth.signOut();
             }
         }
 
         // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            initApp();
-            
             // Add sample animations
             const cards = document.querySelectorAll('.fade-in');
             cards.forEach((card, index) => {
